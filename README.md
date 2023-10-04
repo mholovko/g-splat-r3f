@@ -1,22 +1,9 @@
-# next-template
+# Gaussian Splatting React Three Fiber
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+a simple and interactive components for react-three-fiber, based on the groundwork of [antimatter15’s original WebGL implementation](https://github.com/antimatter15/splat) and [crubier’s r3f port](https://github.com/vincent-lecrubier-skydio/react-three-fiber-gaussian-splat).
 
-## Usage
+## Utilized Technologies:
 
-```bash
-npx create-next-app -e https://github.com/shadcn/next-template
-```
-
-## Features
-
-- Next.js 13 App Directory
-- Radix UI Primitives
-- Tailwind CSS
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Tailwind CSS class sorting, merging and linting.
-
-## License
-
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+- 🇨🇭 r3f: Creating efficient 3D scenes.
+- 🖥️ Next.js 13: Optimizing the web application.
+- 🖌️ shadcn/ui: Managing the visuals and aesthetics.

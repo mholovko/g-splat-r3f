@@ -1,18 +1,19 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "g-splat-r3f",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "3D Gaussian Splatting Viewer with three.js and react-three-fiber.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Examples",
+      href: "/examples",
     },
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    cst: "https://spatialtech.info",
+    twitter: "https://twitter.com/cst_echo",
+    github: "https://github.com/sptch",
+    docs: "https://github.com/sptch",
   },
 }
