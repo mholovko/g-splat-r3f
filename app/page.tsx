@@ -37,7 +37,7 @@ export default function IndexPage() {
         </div>
         <div className="order-3">
           <h3 className="mt-8 text-xl font-medium">Utilized Technologies: </h3>
-          <p className="max-w-[700px] text-lg text-muted-foreground">
+          <p className="max-w-[700px] py-2 text-lg text-muted-foreground">
             <Link
               target="blank"
               className="underline"
@@ -67,7 +67,7 @@ export default function IndexPage() {
             </Link>
             : Managing the visuals and aesthetics.
           </p>
-          <p className="max-w-[700px] text-lg text-muted-foreground">
+          <p className="max-w-[700px] py-2 text-lg text-muted-foreground">
             For more on the underlying technology and research,{" "}
             <Link
               target="blank"

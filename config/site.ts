@@ -13,7 +13,7 @@ export const siteConfig = {
   links: {
     cst: "https://spatialtech.info",
     twitter: "https://twitter.com/cst_echo",
-    github: "https://github.com/sptch",
-    docs: "https://github.com/sptch",
+    github: "https://github.com/mholovko/g-splat-r3f",
+    docs: "https://github.com/mholovko/g-splat-r3f",
   },
 }

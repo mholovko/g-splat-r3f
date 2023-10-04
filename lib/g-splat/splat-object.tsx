@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
-import SplatSortWorker from "worker-loader!./sort-worker"
+import SplatSortWorker from "worker-loader!./splat-sort-worker"
 
 import { fragmentShaderSource, vertexShaderSource } from "./splat-shaders"
 
@@ -155,7 +155,7 @@ export function Splat({
   const instanceCount = Math.min(buffers.quat.length / 4, maxSplats)
 
   return (
-    <mesh ref={ref} renderOrder={10} rotation={[Math.PI, 0, 0]}>
+    <mesh ref={ref} renderOrder={10}>
       <instancedBufferGeometry
         key={instanceCount}
         instanceCount={instanceCount}
