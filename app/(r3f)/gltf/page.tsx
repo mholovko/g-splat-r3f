@@ -11,7 +11,7 @@ import { Canvas } from "@react-three/fiber"
 import { Leva } from "leva"
 
 import { Beetle } from "@/components/canvas/models/Beetle"
-import SplatComponent from "@/components/canvas/SplatComponent"
+import SplatComponent from "@/components/canvas/splat-component"
 
 function Camera() {
   const cameraPosition = [-150, 150, 150]

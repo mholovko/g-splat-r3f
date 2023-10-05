@@ -1,9 +1,47 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { use, useCallback, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 import SplatSortWorker from "worker-loader!./splat-sort-worker"
 
 import { fragmentShaderSource, vertexShaderSource } from "./splat-shaders"
+import { convertPointsToUint8Array } from "./utils/points-to-uint8"
+
+function generateDynamicPoints() {
+  const points = [] as any
+  const numPoints = 10
+  for (let i = 0; i < numPoints; i++) {
+    const theta = Math.random() * 2 * Math.PI
+    const phi = Math.acos(2 * Math.random() - 1)
+    const r = 5 + Math.sin(i * 0.1) * 2
+    const x = r * Math.sin(phi) * Math.cos(theta)
+    const y = r * Math.sin(phi) * Math.sin(theta)
+    const z = r * Math.cos(phi)
+
+    // Randomize scale values
+    const scaleX = 0.1 + Math.random() * 1.5
+    const scaleY = 0.1 + Math.random() * 1.5
+    const scaleZ = 0.1 + Math.random() * 1.5
+
+    // Randomize quaternion values
+    const qi = Math.random() * 2 - 1
+    const qj = Math.random() * 2 - 1
+    const qk = Math.random() * 2 - 1
+    const ql = Math.sqrt(1 - qi * qi - qj * qj - qk * qk)
+
+    points.push({
+      position: { x, y, z },
+      scale: { x: scaleX, y: scaleY, z: scaleZ },
+      color: {
+        r: Math.random() * 255,
+        g: Math.random() * 255,
+        b: Math.random() * 255,
+        a: 255,
+      },
+      quat: { i: qi, j: qj, k: qk, l: ql },
+    })
+  }
+  return points
+}
 
 const computeFocalLengths = (
   width: number,
@@ -19,18 +57,14 @@ const computeFocalLengths = (
   return new THREE.Vector2(fx, fy)
 }
 
-export function Splat({
-  url = "https://antimatter15.com/splat-data/train.splat",
-  maxSplats = Infinity,
-}: {
-  url?: string
-  maxSplats?: number
-}) {
+export function SplatDebug({ maxSplats = Infinity }: { maxSplats?: number }) {
   // Allow direct access to the mesh
   const ref = useRef<THREE.Mesh>(null)
 
   // Web worker doing the splat sorting
   const [worker] = useState(() => new SplatSortWorker())
+
+  const [points, setPoints] = useState(() => generateDynamicPoints())
 
   // Listen to screen and viewport
   const {
@@ -59,10 +93,10 @@ export function Splat({
   const [buffers, setBuffers] = useState({
     index: new Uint16Array([0, 1, 2, 2, 3, 0]),
     position: new Float32Array([1, -1, 0, 1, 1, 0, -1, -1, 0, -1, 1, 0]),
-    color: new Float32Array([1, 0, 1, 1, 1, 1, 0, 1]),
-    quat: new Float32Array([0, 0, 0, 1, 0, 0, 0, 1]),
-    scale: new Float32Array([1, 1, 1, 2, 0.5, 0.5]),
-    center: new Float32Array([0, 0, 0, 2, 0, 0]),
+    color: new Float32Array([]),
+    quat: new Float32Array([]),
+    scale: new Float32Array([]),
+    center: new Float32Array([]),
   })
 
   // Send current camera pose to splat sorting worker
@@ -83,8 +117,7 @@ export function Splat({
   useEffect(() => {
     worker.onmessage = (e) => {
       const { quat, scale, center, color /*viewProj*/ } = e.data
-      // We could store viewProj here
-      // lastProj = viewProj
+
       setBuffers((buffers) => ({ ...buffers, quat, scale, center, color }))
     }
     return () => {
@@ -92,58 +125,13 @@ export function Splat({
     }
   })
 
-  // Load splat file from url
   useEffect(() => {
-    let stopLoading = false
-    const loadModel = async () => {
-      const req = await fetch(url, {
-        mode: "cors",
-        credentials: "omit",
-      })
-      if (
-        req.status != 200 ||
-        req.body == null ||
-        req.headers == null ||
-        req.headers.get("content-length") == null
-      ) {
-        throw new Error(req.status + " Unable to load " + req.url)
-      }
-      const rowLength = 3 * 4 + 3 * 4 + 4 + 4
-      const reader = req.body.getReader()
-      let splatData = new Uint8Array(
-        parseInt(req.headers.get("content-length")!)
-      )
-      let vertexCount = 0
-      let lastVertexCount = -1
-      let bytesRead = 0
-
-      while (true) {
-        const { done, value } = await reader.read()
-
-        if (done || stopLoading) break
-        splatData.set(value, bytesRead)
-        bytesRead += value.length
-
-        if (vertexCount > lastVertexCount) {
-          worker.postMessage({
-            buffer: splatData.buffer,
-            vertexCount: Math.floor(bytesRead / rowLength),
-          })
-          lastVertexCount = vertexCount
-        }
-      }
-      if (!stopLoading) {
-        worker.postMessage({
-          buffer: splatData.buffer,
-          vertexCount: Math.floor(bytesRead / rowLength),
-        })
-      }
-    }
-    loadModel()
-    return () => {
-      stopLoading = true
-    }
-  }, [url])
+    const splatData = convertPointsToUint8Array(points)
+    worker.postMessage({
+      buffer: splatData.buffer,
+      vertexCount: points.length,
+    })
+  })
 
   // Signal to Three that attributes change when their buffer change
   const update = useCallback(
