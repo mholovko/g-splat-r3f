@@ -72,7 +72,7 @@ void main () {
     vPosition = vec2(vCenter + position.x * (position.y < 0.0 ? v1 : v2) / viewport);
     gl_Position = vec4(vPosition, pos2d.z / pos2d.w, 1);
 }
-`;
+`
 
 export const fragmentShaderSource = `
 precision mediump float;
@@ -95,4 +95,4 @@ void main () {
 
     gl_FragColor = vec4(vColor.rgb, alpha);
 }
-`;
+`

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { PerspectiveCamera } from "@react-three/drei"
+import { PerspectiveCamera, TransformControls } from "@react-three/drei"
 import { Canvas, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -51,9 +51,9 @@ export default function HeroSplat() {
       dpr={1}
     >
       <Camera />
-      <group>
+      <TransformControls mode="translate">
         <SplatDebug />
-      </group>
+      </TransformControls>
     </Canvas>
   )
 }

@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full space-x-4 bg-background ">
+    <header className="sticky top-0 z-40 w-full space-x-4 bg-background/40 backdrop-blur-sm ">
       <div className="container flex h-20 items-center  border-b sm:justify-between sm:space-x-0">
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-4">
