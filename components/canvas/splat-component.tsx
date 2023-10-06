@@ -6,12 +6,14 @@ export function SplatComponent({
   splatRot,
   splatScale,
   maxSplats,
+  splatScaleFactor,
 }: {
   splatUrl: string
   splatPos: [number, number, number]
   splatRot: [number, number, number]
   splatScale: number
   maxSplats: number
+  splatScaleFactor?: number
 }) {
   return (
     splatUrl && (
@@ -20,7 +22,11 @@ export function SplatComponent({
         rotation={splatRot}
         scale={[splatScale, splatScale, splatScale]}
       >
-        <Splat url={splatUrl} maxSplats={maxSplats} />
+        <Splat
+          splatScaleFactor={splatScaleFactor}
+          url={splatUrl}
+          maxSplats={maxSplats}
+        />
       </group>
     )
   )

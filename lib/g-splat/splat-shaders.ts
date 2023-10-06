@@ -12,6 +12,8 @@ uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 uniform vec2 focal;
 uniform vec2 viewport;
+uniform float splatScaleFactor;
+
 
 varying vec4 vColor;
 varying vec3 vConic;
@@ -62,8 +64,8 @@ void main () {
     float mid = 0.5 * (cov2d.x + cov2d.z);
     float lambda1 = mid + sqrt(max(0.1, mid * mid - det));
     float lambda2 = mid - sqrt(max(0.1, mid * mid - det));
-    vec2 v1 = 7.0 * sqrt(lambda1) * normalize(vec2(cov2d.y, lambda1 - cov2d.x));
-    vec2 v2 = 7.0 * sqrt(lambda2) * normalize(vec2(-(lambda1 - cov2d.x),cov2d.y));
+    vec2 v1 = 7.0 * sqrt(lambda1) * normalize(vec2(cov2d.y, lambda1 - cov2d.x)) * splatScaleFactor;
+    vec2 v2 = 7.0 * sqrt(lambda2) * normalize(vec2(-(lambda1 - cov2d.x),cov2d.y)) * splatScaleFactor;
 
     vColor = color;
     vConic = conic;
@@ -83,11 +85,14 @@ varying vec2 vCenter;
 
 uniform vec2 viewport;
 uniform vec2 focal;
+uniform float splatScaleFactor;
 
 void main () {    
 	vec2 d = (vCenter - 2.0 * (gl_FragCoord.xy/viewport - vec2(0.5, 0.5))) * viewport * 0.5;
     
-	float power = -0.5 * (vConic.x * d.x * d.x + vConic.z * d.y * d.y) + vConic.y * d.x * d.y;
+	float power = -0.5 * (vConic.x * d.x * d.x + vConic.z * d.y * d.y ) + vConic.y * d.x * d.y;
+
+    power *= 1.0 + (1.0 - splatScaleFactor) * 100.0; 
 
 	if (power > 0.0) discard;
 	float alpha = min(0.99, vColor.a * exp(power));

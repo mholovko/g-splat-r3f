@@ -57,7 +57,13 @@ const computeFocalLengths = (
   return new THREE.Vector2(fx, fy)
 }
 
-export function SplatDebug({ maxSplats = Infinity }: { maxSplats?: number }) {
+export function SplatDebug({
+  maxSplats = Infinity,
+  splatScaleFactor = 1,
+}: {
+  maxSplats?: number
+  splatScaleFactor?: number
+}) {
   // Allow direct access to the mesh
   const ref = useRef<THREE.Mesh>(null)
 
@@ -81,13 +87,17 @@ export function SplatDebug({ maxSplats = Infinity }: { maxSplats?: number }) {
     focal: {
       value: computeFocalLengths(width, height, fov, aspect, dpr),
     },
+    splatScaleFactor: {
+      value: splatScaleFactor,
+    },
   })
 
   // Update uniforms when window changes
   useEffect(() => {
     uniforms.focal.value = computeFocalLengths(width, height, fov, aspect, dpr)
     uniforms.viewport.value = new THREE.Vector2(width * dpr, height * dpr)
-  }, [width, height, fov, aspect, dpr])
+    uniforms.splatScaleFactor.value = splatScaleFactor
+  }, [width, height, fov, aspect, dpr, splatScaleFactor])
 
   // Initialize attribute buffers
   const [buffers, setBuffers] = useState({

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { use, useCallback, useEffect, useRef, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 import SplatSortWorker from "worker-loader!./splat-sort-worker"
@@ -22,9 +22,11 @@ const computeFocalLengths = (
 export function Splat({
   url = "https://antimatter15.com/splat-data/train.splat",
   maxSplats = Infinity,
+  splatScaleFactor = 1,
 }: {
   url?: string
   maxSplats?: number
+  splatScaleFactor?: number
 }) {
   // Allow direct access to the mesh
   const ref = useRef<THREE.Mesh>(null)
@@ -47,13 +49,17 @@ export function Splat({
     focal: {
       value: computeFocalLengths(width, height, fov, aspect, dpr),
     },
+    splatScaleFactor: {
+      value: splatScaleFactor,
+    },
   })
 
   // Update uniforms when window changes
   useEffect(() => {
     uniforms.focal.value = computeFocalLengths(width, height, fov, aspect, dpr)
     uniforms.viewport.value = new THREE.Vector2(width * dpr, height * dpr)
-  }, [width, height, fov, aspect, dpr])
+    uniforms.splatScaleFactor.value = splatScaleFactor
+  }, [width, height, fov, aspect, dpr, splatScaleFactor])
 
   // Initialize attribute buffers
   const [buffers, setBuffers] = useState({
