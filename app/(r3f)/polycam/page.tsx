@@ -8,10 +8,9 @@ export default async function IndexPage() {
   const polycamData = await fetch(
     "https://poly.cam/_next/data/A4Ox-UC88BcuEhEL93Rlb/gaussian-splatting.json"
   ).then((res) => res.json())
-  console.log(polycamData)
   const highlights = polycamData.pageProps.popularFeed.results
 
-  console.log(highlights)
+  // console.log(highlights)
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="order-1  flex flex-col items-start gap-2">
@@ -51,7 +50,7 @@ export default async function IndexPage() {
         <Separator />
         <div className="grid grid-cols-2 gap-4 py-2 md:grid-cols-4 md:gap-4 md:py-4">
           {highlights.map((item, index) => (
-            <div>
+            <div key={item.id}>
               <Link
                 className=" relative w-full "
                 href={`polycam/${item.objectID}`}

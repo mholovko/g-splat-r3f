@@ -47,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <SiteHeader />
               <div className="relative h-full grow"> {children}</div>
             </div>
-            <TailwindIndicator />
+            {/* <TailwindIndicator /> */}
             <Footer />
           </ThemeProvider>
         </body>
