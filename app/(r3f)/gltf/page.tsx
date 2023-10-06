@@ -47,7 +47,6 @@ export default function GltfPage() {
             "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat"
           }
         />
-
         <OrbitControls makeDefault />
         <Camera />
 
