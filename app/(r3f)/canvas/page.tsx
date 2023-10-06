@@ -5,6 +5,7 @@ import { Environment, OrbitControls, StatsGl } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Leva, useControls } from "leva"
 
+import { Beetle } from "@/components/canvas/models/Beetle"
 import SplatComponent from "@/components/canvas/splat-component"
 
 const splatUrls = [
@@ -14,11 +15,11 @@ const splatUrls = [
 
   "https://storage.polycam.io/captures/aad80a3f-0c7f-43f1-ba36-8785eae1cb51/model.splat",
   "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat",
-  "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat",
+  "https://storage.polycam.io/captures/2ed756d0-17f5-461b-8911-44f8e1a8c47d/model.splat",
   "https://storage.polycam.io/captures/93f00b51-4b10-4b25-b3ce-e21b3c9aa558/model.splat",
 ] as const
 
-function App() {
+export default function CanvasPage() {
   // On screen controls
   const { splatUrl, maxSplats, splatPos, splatRot, splatScale } = useControls({
     splatUrl: { label: "Select Model", options: splatUrls },
@@ -54,21 +55,40 @@ function App() {
 
   return (
     <div className="absolute h-full w-full">
-      <Leva oneLineLabels style={{ top: "48px" }} />
+      {/* <Leva oneLineLabels /> */}
       <Canvas
         className="h-hull w-hull bg-background"
         gl={{ antialias: false }}
         dpr={1}
       >
-        <StatsGl />
+        {/* <StatsGl /> */}
         <OrbitControls />
-
-        <SplatComponent
+        {/* <Beetle /> */}
+        {/* <SplatComponent
           maxSplats={maxSplats}
           splatPos={splatPos}
           splatRot={splatRot}
           splatScale={splatScale}
           splatUrl={splatUrl}
+        /> */}
+
+        <SplatComponent
+          maxSplats={20000000}
+          splatPos={[2.4, 13.2, 4.8]}
+          splatRot={[-1.57, 0.03, -3.91]}
+          splatScale={17.8}
+          splatUrl={
+            "https://storage.polycam.io/captures/2ed756d0-17f5-461b-8911-44f8e1a8c47d/model.splat"
+          }
+        />
+        <SplatComponent
+          maxSplats={20000000}
+          splatPos={[-6.6, 20.3, 24.3]}
+          splatRot={[-1.61, 0.05, -4.7]}
+          splatScale={27.5}
+          splatUrl={
+            "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat"
+          }
         />
 
         <Environment preset="city" />
@@ -76,5 +96,3 @@ function App() {
     </div>
   )
 }
-
-export default App
