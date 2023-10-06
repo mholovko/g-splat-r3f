@@ -6,12 +6,10 @@ import { Input } from "@/components/input"
 
 export default async function IndexPage() {
   const polycamData = await fetch(
-    "https://poly.cam/_next/data/ibnyUGXlQiR2EcNjM8Yik/gaussian-splatting.json"
+    "https://poly.cam/_next/data/A4Ox-UC88BcuEhEL93Rlb/gaussian-splatting.json"
   ).then((res) => res.json())
   console.log(polycamData)
-  const highlights = polycamData.pageProps.featuredCaptures.concat(
-    polycamData.pageProps.galleryCaptures.slice(0, 4)
-  )
+  const highlights = polycamData.pageProps.popularFeed.results
 
   console.log(highlights)
   return (
