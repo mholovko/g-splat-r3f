@@ -1,13 +1,33 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 
 import HeroSplat from "@/components/canvas/hero-splat"
 
+const expamples = [
+  {
+    name: "Manitulate Polycam Models with r3f leva",
+
+    url: "/polycam/",
+    preview: "/polycam.png",
+  },
+  {
+    name: "Toggle between two models",
+    url: "/toggle/",
+    preview: "/toggle.png",
+  },
+  {
+    name: "Portal",
+    url: "/portal/",
+    preview: "/portal.png",
+  },
+]
+
 export default function IndexPage() {
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      <div className="flex grid-rows-3 flex-col gap-8 pb-24 md:order-last md:grid md:grid-cols-[1fr,2fr] md:grid-rows-2 lg:grid-cols-[1fr,3fr]">
+      <div className="flex grid-rows-3 flex-col gap-8 pb-24  md:grid md:grid-cols-[1fr,2fr] md:grid-rows-2 lg:grid-cols-[1fr,3fr]">
         <div className="order-1  flex max-w-[980px] flex-col items-start gap-2">
           <h1 className="text-3xl font-medium md:text-3xl">
             r3f components for <br />
@@ -92,6 +112,27 @@ export default function IndexPage() {
           <div className=" absolute aspect-square w-full bg-background md:aspect-auto md:h-full">
             <HeroSplat />
           </div>
+        </div>
+      </div>
+      <div>
+        <h1 className="text-3xl font-medium md:text-3xl">Expamples:</h1>
+        <div className="grid grid-cols-3 gap-4">
+          {expamples.map((item) => (
+            <div key={item.name} className="py-4">
+              <Link href={item.url}>
+                <Image
+                  className="reliative aspect-[4/3] rounded-sm object-cover object-top shadow hover:shadow-lg"
+                  src={item.preview}
+                  width={512}
+                  height={512}
+                  alt={item.name}
+                  layout="responsive"
+                  style={{ objectFit: "cover" }}
+                />
+                <h2 className="truncate pt-2 font-medium">{item.name}</h2>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </section>

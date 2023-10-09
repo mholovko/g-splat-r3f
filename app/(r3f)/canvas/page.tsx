@@ -13,7 +13,7 @@ const splatUrls = [
   "https://antimatter15.com/splat-data/nike.splat",
   "https://antimatter15.com/splat-data/bicycle.splat",
 
-  "https://storage.polycam.io/captures/aad80a3f-0c7f-43f1-ba36-8785eae1cb51/model.splat",
+  "https://storage.polycam.io/captures/f55f2844-bc97-46be-b60f-be3c6b18be3a/model.splat",
   "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat",
   "https://storage.polycam.io/captures/2ed756d0-17f5-461b-8911-44f8e1a8c47d/model.splat",
   "https://storage.polycam.io/captures/93f00b51-4b10-4b25-b3ce-e21b3c9aa558/model.splat",
@@ -64,32 +64,33 @@ export default function CanvasPage() {
         {/* <StatsGl /> */}
         <OrbitControls />
         {/* <Beetle /> */}
-        {/* <SplatComponent
+        <SplatComponent
           maxSplats={maxSplats}
           splatPos={splatPos}
           splatRot={splatRot}
           splatScale={splatScale}
           splatUrl={splatUrl}
-        /> */}
+        />
 
         <SplatComponent
           maxSplats={20000000}
           splatPos={[2.4, 13.2, 4.8]}
-          splatRot={[-1.57, 0.03, -3.91]}
+          splatRot={[-1.57, 0.03, 0]}
           splatScale={17.8}
           splatUrl={
-            "https://storage.polycam.io/captures/2ed756d0-17f5-461b-8911-44f8e1a8c47d/model.splat"
+            "https://storage.polycam.io/captures/7fd24cd2-77d5-40c5-afd7-807b9ec20a60/model.splat"
           }
         />
-        <SplatComponent
+        <mesh position={[-10, 20, 10]}></mesh>
+        {/* <SplatComponent
           maxSplats={20000000}
-          splatPos={[-6.6, 20.3, 24.3]}
-          splatRot={[-1.61, 0.05, -4.7]}
-          splatScale={27.5}
+          splatPos={[-112.2, 4.9, -70.0]}
+          splatRot={[-1.63, -0.03, 0.84]}
+          splatScale={40}
           splatUrl={
-            "https://storage.polycam.io/captures/27405cdb-6520-4454-b5a4-2a54e2f467c8/model.splat"
+            "https://storage.polycam.io/captures/f55f2844-bc97-46be-b60f-be3c6b18be3a/model.splat"
           }
-        />
+        /> */}
 
         <Environment preset="city" />
       </Canvas>
