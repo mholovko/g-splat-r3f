@@ -7,7 +7,7 @@ import HeroSplat from "@/components/canvas/hero-splat"
 
 const expamples = [
   {
-    name: "Manitulate Polycam Models with r3f leva",
+    name: "Explore Polycam Models with r3f and leva",
 
     url: "/polycam/",
     preview: "/polycam.png",
